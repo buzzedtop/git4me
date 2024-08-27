@@ -1,26 +1,26 @@
-name: Makefile CI
+PUBSPEC_YAML = $(shell find . -name pubspec.yaml)
+PUBSPEC_LOCK = $(PUBSPEC_YAML:.yaml=.lock)
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+# Runs `flutter pub get` in the packages that `pubspec.yaml` was modified.
+pub_get: $(PUBSPEC_LOCK)
 
-jobs:
-  macos:
-    runs-on: macos-latest
+%pubspec.lock: %pubspec.yaml
+	@cd $(@D) && \
+	flutter pub get
 
-    steps:
-    - uses: actions/checkout@v4
+# Runs `flutter pub get` in all the project packages.
+pub_get_all:
+	@find . -name pubspec.yaml -exec echo "### Getting packages for {}" \; \
+	-execdir flutter pub get \;
 
-    - name: configure
-      run: ./configure
+# Runs `flutter pub run build_runner build` in all the project packages.
+generate_sources_all:
+	@find . -name pubspec.yaml -exec echo "### Generating sources for {}" \; \
+	-execdir flutter pub run build_runner build --delete-conflicting-outputs \;
 
-    - name: Install dependencies
-      run: make
+# Runs `flutter clean` in all the project packages.
+clean_all:
+	@find . -name pubspec.yaml -exec echo "### Cleaning {}" \; \
+	-execdir flutter clean \;
 
-    - name: Run check
-      run: make check
-
-    - name: Run distcheck
-      run: make distcheck
+.PHONY: pub_get pub_get_all generate_sources_all clean_all
