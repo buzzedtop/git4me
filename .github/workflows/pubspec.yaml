@@ -1,0 +1,49 @@
+name: flutter_modular_architecture
+description: Sample project of a modular architecture for Flutter apps
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  get_it: ^7.2.0
+
+  # Shared
+  _core:
+    path: packages/shared/all/core
+  _intent_launcher:
+    path: packages/shared/features/intent_launcher
+
+  # Use cases
+  _bike_services_use_cases:
+    path: packages/use_cases/bike_services
+  _bike_services_use_cases_real_adapters:
+    path: packages/use_cases/bike_services/packages/real_adapters
+  _bike_stations_use_cases:
+    path: packages/use_cases/bike_stations
+  _bike_stations_use_cases_real_adapters:
+    path: packages/use_cases/bike_stations/packages/real_adapters
+  _location_use_cases:
+    path: packages/use_cases/location
+  _location_use_cases_real_adapters:
+    path: packages/use_cases/location/packages/real_adapters
+
+  # Features
+  _bike_services_features:
+    path: packages/features/bike_services
+  _bike_stations_features:
+    path: packages/features/bike_stations
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+flutter:
+  uses-material-design: true
