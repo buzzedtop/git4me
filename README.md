@@ -1,3 +1,4 @@
+<pre><code class="language-mermaid">
 ```mermaid
 flowchart TD
     A-->B;
@@ -5,6 +6,7 @@ flowchart TD
     B-->D;
     C-->D;
 ```
+</code></pre>
 
 Windows
 ```powershell
