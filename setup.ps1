@@ -1,4 +1,6 @@
-iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+try {
+    iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+}
 
 scoop bucket add main
 scoop bucket add extras
