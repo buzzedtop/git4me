@@ -1,8 +1,8 @@
 try {
-    iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+    scoop update
 }
 catch {
-    Write-Outpit "Scoop Altready installed"
+    iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 }
 
 scoop bucket add main
