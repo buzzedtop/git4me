@@ -7,5 +7,9 @@ catch {
 
 scoop bucket add main
 scoop bucket add extras
-scoop install main/git-tfs
-scoop install extras/vscode
+scoop install git
+scoop install vscode
+scoop install flutter
+scoop install android-clt
+scoop install android-studio
+scoop install java/oraclejdk-lts
