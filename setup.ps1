@@ -9,6 +9,7 @@ scoop install git
 
 scoop bucket add main
 scoop bucket add extras
+scoop bucket add java
 
 scoop install vscode
 scoop install flutter
