@@ -9,7 +9,7 @@ Test
 
 ```mermaid
 graph TD;
-    Windows-->Setup.ps1;
+    A-->B;
     A-->C;
     B-->D;
     C-->D;
