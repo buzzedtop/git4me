@@ -15,7 +15,7 @@ scoop install vscode
 scoop install flutter
 scoop install android-clt
 scoop install android-studio
-scoop install java/oraclejdk-lts
+scoop install oraclejdk-lts@19
 scoop install gh
 
 Get-Content 'G:\My Drive\ssh\mytoken.txt' | gh auth login --with-token -
