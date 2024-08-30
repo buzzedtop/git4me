@@ -18,4 +18,4 @@ scoop install android-studio
 scoop install oraclejdk-lts@19
 scoop install gh
 
-Get-Content 'G:\My Drive\ssh\mytoken.txt' | gh auth login --with-token -
+Get-Content -path 'G:\My Drive\ssh\mytoken.txt' | gh auth login --with-token 
