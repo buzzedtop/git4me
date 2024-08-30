@@ -18,6 +18,9 @@ scoop install android-studio
 scoop install oraclejdk-lts@19
 scoop install gh
 
+code install extension Dart-Code.flutter
+
+#Github Auth from token or initiate gh auth login
 try {
     Get-Content -path 'G:\My Drive\ssh\mytoken.txt' | gh auth login --with-token 
 } catch {
