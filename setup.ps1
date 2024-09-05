@@ -22,19 +22,12 @@ Start-Job -ScriptBlock { scoop install glab } -name gl
 $jobStatus = Get-Job
 While ($jobStatus.State -ne "Completed"){
      $jobStatus = Get-Job
-     Write-Progress -Activity "Waiting for jobs..." -PercentComplete $x
-     If($x -eq 100){
-          $x = 1
-     }
-    Else{
-         $x += 1
-    }
-
-#Outside the while loop add the following to remove the progress bar when done
-Write-Progress -Activity "Collecting Files..." -Completed
+     Write-Host "Waiting for job to finish..."
 }
 
 Get-Job | Remove-Job #Unless you need the output of these script then use receive-job first
+
+write-host "Processed"
 
 Start-Job -ScriptBlock { code install extension Dart-Code.flutter }
 
