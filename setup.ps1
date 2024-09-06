@@ -1,4 +1,4 @@
-Write-Output("v1.0.13")
+Write-Output("v1.0.14")
 try {
     #scoop update
 }
@@ -13,9 +13,9 @@ Get-Job | Wait-Job
 Get-Job | Remove-Job
 
 Write-Output("Bucket Updates")
-Start-Job -ScriptBlock { scoop bucket add main }
-Start-Job -ScriptBlock { scoop bucket add extras }
-Start-Job -ScriptBlock { scoop bucket add java }
+Start-Job -ScriptBlock { scoop bucket add main } -name bucket_main
+Start-Job -ScriptBlock { scoop bucket add extras } -name bucket_extras
+Start-Job -ScriptBlock { scoop bucket add java } -name bucket_java
 Get-Job | Wait-Job
 Get-Job | Remove-Job
 
@@ -31,7 +31,7 @@ Get-Job | Wait-Job
 Get-Job | Remove-Job
 
 Write-Output("Configuration Start")
-Start-Job -ScriptBlock { code install extension Dart-Code.flutter }
+Start-Job -ScriptBlock { code install extension Dart-Code.flutter } -name ext_dart
 
 try {
     Get-Content -path 'G:\My Drive\ssh\mytoken.txt' | gh auth login --with-token 
