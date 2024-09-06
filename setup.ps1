@@ -32,13 +32,13 @@ scoop bucket add extras
 scoop bucket add java
 
 #Test Async Job 1. Iterates through 10 integers and sleeps 1 second in between
-Start-Job –Name code –Scriptblock {scoop install vscode}
-Start-Job –Name flutter –Scriptblock {scoop install flutter}
-Start-Job –Name android-clt –Scriptblock {scoop install android-clt}
-Start-Job –Name android-studio –Scriptblock {scoop install android-studio}
-Start-Job –Name oraclejdk-lts –Scriptblock {scoop install oraclejdk-lts@19}
-Start-Job –Name gh –Scriptblock {scoop install gh}
-Start-Job –Name glab –Scriptblock {scoop install glab}
+Start-Job –Scriptblock {scoop install vscode}
+Start-Job –Scriptblock {scoop install flutter}
+Start-Job –Scriptblock {scoop install android-clt}
+Start-Job –Scriptblock {scoop install android-studio}
+Start-Job –Scriptblock {scoop install oraclejdk-lts@19}
+Start-Job –Scriptblock {scoop install gh}
+Start-Job –Scriptblock {scoop install glab}
 #Monitor all running jobs in the current sessions until they are complete
 #Call our custom WriteJobProgress function for each job to show progress. Sleep 1 second and check again
 
