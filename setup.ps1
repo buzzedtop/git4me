@@ -1,5 +1,5 @@
 Write-Output("v1.0.7")
-Write-Output("Scoop Check")
+Write-Output("echo Scoop Check")
 try {
     scoop update
 }
@@ -8,13 +8,13 @@ catch {
     irm get.scoop.sh | iex
 }
 
-Write-Output("Git Install")
+Write-Output("echo Git Install")
 
 Start-Job -ScriptBlock { scoop install git } -name git
 
 Get-Job | Wait-Job
 
-Write-Output("Bucket Add")
+Write-Output("echo Bucket Add")
 
 Start-Job -ScriptBlock { scoop bucket add main }
 Start-Job -ScriptBlock { scoop bucket add extras }
@@ -22,7 +22,7 @@ Start-Job -ScriptBlock { scoop bucket add java }
 
 Get-Job | Wait-Job
 
-Write-Output("Mass Install")
+Write-Output("echo Mass Install")
 
 Start-Job -ScriptBlock { scoop install vscode } -name code
 Start-Job -ScriptBlock { scoop install flutter } -name flutter
@@ -34,7 +34,7 @@ Start-Job -ScriptBlock { scoop install glab } -name gl
 
 Get-Job | Wait-Job
 
-Write-Output("Configurations")
+Write-Output("echo Configurations")
 
 Start-Job -ScriptBlock { code install extension Dart-Code.flutter }
 
