@@ -32,33 +32,13 @@ scoop bucket add extras
 scoop bucket add java
 
 #Test Async Job 1. Iterates through 10 integers and sleeps 1 second in between
-$job1 = Start-Job –Name code –Scriptblock {
-    scoop install vscode
-}
-
-$job2 = Start-Job –Name flutter –Scriptblock {
-    scoop install flutter
-}
-
-$job3 = Start-Job –Name android-clt –Scriptblock {
-    scoop install android-clt
-}
-
-$job4 = Start-Job –Name android-studio –Scriptblock {
-    scoop install android-studio
-}
-
-$job5 = Start-Job –Name oraclejdk-lts –Scriptblock {
-    scoop install oraclejdk-lts@19
-}
-
-$job6 = Start-Job –Name gh –Scriptblock {
-    scoop install gh
-}
-
-$job7 = Start-Job –Name glab –Scriptblock {
-    scoop install glab
-}
+Start-Job –Name code –Scriptblock {scoop install vscode}
+Start-Job –Name flutter –Scriptblock {scoop install flutter}
+Start-Job –Name android-clt –Scriptblock {scoop install android-clt}
+Start-Job –Name android-studio –Scriptblock {scoop install android-studio}
+Start-Job –Name oraclejdk-lts –Scriptblock {scoop install oraclejdk-lts@19}
+Start-Job –Name gh –Scriptblock {scoop install gh}
+Start-Job –Name glab –Scriptblock {scoop install glab}
 #Monitor all running jobs in the current sessions until they are complete
 #Call our custom WriteJobProgress function for each job to show progress. Sleep 1 second and check again
 
@@ -72,20 +52,13 @@ $job7 = Start-Job –Name glab –Scriptblock {
 
 while((Get-Job | Where-Object {$_.State -ne "Completed"}).Count -gt 0)
 {    
-    WriteJobProgress($job1);
-    WriteJobProgress($job2);
-    WriteJobProgress($job3);
-    WriteJobProgress($job4);
-    WriteJobProgress($job5);
-    WriteJobProgress($job6);
-    WriteJobProgress($job7);
  
     Start-Sleep -Seconds 1
 }
 
-Get-Job | Remove-Job #Unless you need the output of these script then use receive-job first
+#Get-Job | Remove-Job #Unless you need the output of these script then use receive-job first
 
-write-host "Processed"
+#write-host "Processed"
 
 Start-Job -ScriptBlock { code install extension Dart-Code.flutter }
 
