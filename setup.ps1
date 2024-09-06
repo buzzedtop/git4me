@@ -1,4 +1,4 @@
-Write-Output("v1.0.11")
+Write-Output("v1.0.12")
 try {
     #scoop update
 }
@@ -30,11 +30,8 @@ Get-Job | Wait-Job
 Write-Output("Configuration Start")
 Start-Job -ScriptBlock { code install extension Dart-Code.flutter }
 
-Wait-Job -Name "gh" {
-    #Github Auth from token or initiate gh auth login
-    try {
-        Get-Content -path 'G:\My Drive\ssh\mytoken.txt' | gh auth login --with-token 
-    } catch {
-        gh auth login
-    }
+try {
+    Get-Content -path 'G:\My Drive\ssh\mytoken.txt' | gh auth login --with-token 
+} catch {
+    gh auth login
 }
