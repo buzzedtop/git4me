@@ -1,10 +1,10 @@
-Write-Output("v1.0.9")
+Write-Output("v1.0.10")
 try {
-    scoop update
+    #scoop update
 }
 catch {
-    iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-    #irm get.scoop.sh | iex
+    #iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+    irm get.scoop.sh | iex
 }
 
 Start-Job -ScriptBlock { scoop install git } -name git
