@@ -1,4 +1,4 @@
-Write-Output("v1.0.12")
+Write-Output("v1.0.13")
 try {
     #scoop update
 }
@@ -10,12 +10,14 @@ catch {
 Write-Output("Git Install")
 Start-Job -ScriptBlock { scoop install git } -name git
 Get-Job | Wait-Job
+Get-Job | Remove-Job
 
 Write-Output("Bucket Updates")
 Start-Job -ScriptBlock { scoop bucket add main }
 Start-Job -ScriptBlock { scoop bucket add extras }
 Start-Job -ScriptBlock { scoop bucket add java }
 Get-Job | Wait-Job
+Get-Job | Remove-Job
 
 Write-Output("Mass Install")
 Start-Job -ScriptBlock { scoop install vscode } -name code
@@ -26,6 +28,7 @@ Start-Job -ScriptBlock { scoop install oraclejdk-lts@19 } -name java
 Start-Job -ScriptBlock { scoop install gh } -name gh
 Start-Job -ScriptBlock { scoop install glab } -name gl
 Get-Job | Wait-Job
+Get-Job | Remove-Job
 
 Write-Output("Configuration Start")
 Start-Job -ScriptBlock { code install extension Dart-Code.flutter }
@@ -35,3 +38,6 @@ try {
 } catch {
     gh auth login
 }
+
+Get-Job | Wait-Job
+Get-Job | Remove-Job
