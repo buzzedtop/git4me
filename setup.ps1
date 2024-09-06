@@ -1,3 +1,23 @@
+#Accepts a Job as a parameter and writes the latest progress of it
+function WriteJobProgress
+{
+    param($Job)
+ 
+    #Make sure the first child job exists
+    if($Job.ChildJobs[0].Progress -ne $null)
+    {
+        #Extracts the latest progress of the job and writes the progress
+        $jobProgressHistory = $Job.ChildJobs[0].Progress;
+        $latestProgress = $jobProgressHistory[$jobProgressHistory.Count - 1];
+        $latestPercentComplete = $latestProgress | Select -expand PercentComplete;
+        $latestActivity = $latestProgress | Select -expand Activity;
+        $latestStatus = $latestProgress | Select -expand StatusDescription;
+    
+        #When adding multiple progress bars, a unique ID must be provided. Here I am providing the JobID as this
+        Write-Progress -Id $Job.Id -Activity $latestActivity -Status $latestStatus -PercentComplete $latestPercentComplete;
+    }
+}
+
 try {
     scoop update
 }
@@ -20,9 +40,18 @@ Start-Job -ScriptBlock { scoop install gh } -name gh
 Start-Job -ScriptBlock { scoop install glab } -name gl
 
 $jobStatus = Get-Job
-While ($jobStatus.State -ne "Completed"){
-     $jobStatus = Get-Job
-     Write-Host "Waiting for job to finish..."
+#While ($jobStatus.State -ne "Completed"){
+#     $jobStatus = Get-Job
+#     Write-Host "Waiting for job to finish..."
+#}
+#Monitor all running jobs in the current sessions until they are complete
+#Call our custom WriteJobProgress function for each job to show progress. Sleep 1 second and check again
+while((Get-Job | Where-Object {$_.State -ne "Completed"}).Count -gt 0)
+{    
+    WriteJobProgress($job1);
+    WriteJobProgress($job2);
+ 
+    Start-Sleep -Seconds 1
 }
 
 Get-Job | Remove-Job #Unless you need the output of these script then use receive-job first
