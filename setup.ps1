@@ -1,22 +1,4 @@
-#Accepts a Job as a parameter and writes the latest progress of it
-function WriteJobProgress
-{
-    param($Job)
-
-    #Make sure the first child job exists
-    if($Job.ChildJobs[0].Progress -ne $null)
-    {
-        #Extracts the latest progress of the job and writes the progress
-        $jobProgressHistory = $Job.ChildJobs[0].Progress;
-        $latestProgress = $jobProgressHistory[$jobProgressHistory.Count - 1];
-        $latestPercentComplete = $latestProgress | Select -expand PercentComplete;
-        $latestActivity = $latestProgress | Select -expand Activity;
-        $latestStatus = $latestProgress | Select -expand StatusDescription;
-    
-        #When adding multiple progress bars, a unique ID must be provided. Here I am providing the JobID as this
-        Write-Progress -Id $Job.Id -Activity $latestActivity -Status $latestStatus -PercentComplete $latestPercentComplete;
-    }
-}
+Write-Output("v1.0.1")
 
 try {
     scoop update
