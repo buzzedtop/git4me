@@ -1,4 +1,4 @@
-Write-Output("v1.0.4")
+Write-Output("v1.0.5")
 
 try {
     scoop update
@@ -13,17 +13,16 @@ scoop bucket add main
 scoop bucket add extras
 scoop bucket add java
 
-Start-Job -ScriptBlock { scoop install vscode } -name code
-Start-Job -ScriptBlock { scoop install flutter } -name flutter
-Start-Job -ScriptBlock { scoop install android-clt } -name aclt
-Start-Job -ScriptBlock { scoop install android-studio } -name astu
-Start-Job -ScriptBlock { scoop install oraclejdk-lts@19 } -name java
-Start-Job -ScriptBlock { scoop install gh } -name gh
-Start-Job -ScriptBlock { scoop install glab } -name gl
+Start-ThreadJob -ScriptBlock { scoop install vscode } -name code
+Start-ThreadJob -ScriptBlock { scoop install flutter } -name flutter
+Start-ThreadJob -ScriptBlock { scoop install android-clt } -name aclt
+Start-ThreadJob -ScriptBlock { scoop install android-studio } -name astu
+Start-ThreadJob -ScriptBlock { scoop install oraclejdk-lts@19 } -name java
+Start-ThreadJob -ScriptBlock { scoop install gh } -name gh
+Start-ThreadJob -ScriptBlock { scoop install glab } -name gl
 
-Wait-Job -Name "code","flutter" {
-    Start-Job -ScriptBlock { code install extension Dart-Code.flutter }
-}
+Get-Job | Wait-Job
+Start-ThreadJob -ScriptBlock { code install extension Dart-Code.flutter }
 
 Wait-Job -Name "gh" {
     #Github Auth from token or initiate gh auth login
