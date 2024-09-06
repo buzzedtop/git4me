@@ -2,7 +2,7 @@
 function WriteJobProgress
 {
     param($Job)
- 
+
     #Make sure the first child job exists
     if($Job.ChildJobs[0].Progress -ne $null)
     {
@@ -31,25 +31,54 @@ scoop bucket add main
 scoop bucket add extras
 scoop bucket add java
 
-Start-Job -ScriptBlock { scoop install vscode } -name code
-Start-Job -ScriptBlock { scoop install flutter } -name flutter
-Start-Job -ScriptBlock { scoop install android-clt } -name aclt
-Start-Job -ScriptBlock { scoop install android-studio } -name astu
-Start-Job -ScriptBlock { scoop install oraclejdk-lts@19 } -name java
-Start-Job -ScriptBlock { scoop install gh } -name gh
-Start-Job -ScriptBlock { scoop install glab } -name gl
+#Test Async Job 1. Iterates through 10 integers and sleeps 1 second in between
+$job1 = Start-Job –Name code –Scriptblock {
+    scoop install vscode
+}
 
-$jobStatus = Get-Job
-#While ($jobStatus.State -ne "Completed"){
-#     $jobStatus = Get-Job
-#     Write-Host "Waiting for job to finish..."
-#}
+$job2 = Start-Job –Name flutter –Scriptblock {
+    scoop install flutter
+}
+
+$job3 = Start-Job –Name android-clt –Scriptblock {
+    scoop install android-clt
+}
+
+$job4 = Start-Job –Name android-studio –Scriptblock {
+    scoop install android-studio
+}
+
+$job5 = Start-Job –Name oraclejdk-lts –Scriptblock {
+    scoop install oraclejdk-lts@19
+}
+
+$job6 = Start-Job –Name gh –Scriptblock {
+    scoop install gh
+}
+
+$job7 = Start-Job –Name glab –Scriptblock {
+    scoop install glab
+}
 #Monitor all running jobs in the current sessions until they are complete
 #Call our custom WriteJobProgress function for each job to show progress. Sleep 1 second and check again
+
+#Start-Job -ScriptBlock { scoop install vscode } -name code
+#Start-Job -ScriptBlock { scoop install flutter } -name flutter
+#Start-Job -ScriptBlock { scoop install android-clt } -name aclt
+#Start-Job -ScriptBlock { scoop install android-studio } -name astu
+#Start-Job -ScriptBlock { scoop install oraclejdk-lts@19 } -name java
+#Start-Job -ScriptBlock { scoop install gh } -name gh
+#Start-Job -ScriptBlock { scoop install glab } -name gl
+
 while((Get-Job | Where-Object {$_.State -ne "Completed"}).Count -gt 0)
 {    
     WriteJobProgress($job1);
     WriteJobProgress($job2);
+    WriteJobProgress($job3);
+    WriteJobProgress($job4);
+    WriteJobProgress($job5);
+    WriteJobProgress($job6);
+    WriteJobProgress($job7);
  
     Start-Sleep -Seconds 1
 }
