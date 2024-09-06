@@ -8,7 +8,7 @@ catch {
     irm get.scoop.sh | iex
 }
 
-Write-Output("echo Git Install")
+#Write-Output("echo Git Install")
 
 Start-Job -ScriptBlock { scoop install git } -name git
 
