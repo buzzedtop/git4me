@@ -1,6 +1,6 @@
-Write-Output("v1.0.14")
+Write-Output("v1.0.15")
 try {
-    #scoop update
+    scoop update
 }
 catch {
     #iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
@@ -41,3 +41,5 @@ try {
 
 Get-Job | Wait-Job
 Get-Job | Remove-Job
+scoop install 1password-cli
+Invoke-Expression (Get-Content -path 'G:\My Drive\ssh\op.ps1' -Raw)
