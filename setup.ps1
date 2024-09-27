@@ -1,4 +1,4 @@
-Write-Output("v1.0.15")
+Write-Output("v1.0.16")
 try {
     scoop update
 }
@@ -19,12 +19,7 @@ Start-Job -ScriptBlock { scoop bucket add java } -name bucket_java
 Get-Job | Wait-Job
 Get-Job | Remove-Job
 
-Write-Output("Mass Install")
-Start-Job -ScriptBlock { scoop install vscode } -name code
-Start-Job -ScriptBlock { scoop install flutter } -name flutter
-Start-Job -ScriptBlock { scoop install android-clt } -name aclt
-Start-Job -ScriptBlock { scoop install android-studio } -name astu
-Start-Job -ScriptBlock { scoop install oraclejdk-lts@19 } -name java
+Write-Output("Github Gitlab CLI")
 Start-Job -ScriptBlock { scoop install gh } -name gh
 Start-Job -ScriptBlock { scoop install glab } -name gl
 Get-Job | Wait-Job
@@ -43,3 +38,17 @@ Get-Job | Wait-Job
 Get-Job | Remove-Job
 scoop install 1password-cli
 Invoke-Expression (Get-Content -path 'G:\My Drive\ssh\op.ps1' -Raw)
+
+$userInput = Read-Host "flutter setup? y/n"
+if ($userInput -eq "y") {
+    Write-Output("Flutter Setup Install")
+    Start-Job -ScriptBlock { scoop install vscode } -name code
+    Start-Job -ScriptBlock { scoop install flutter } -name flutter
+    Start-Job -ScriptBlock { scoop install android-clt } -name aclt
+    Start-Job -ScriptBlock { scoop install android-studio } -name astu
+    Start-Job -ScriptBlock { scoop install oraclejdk-lts@19 } -name java
+    Get-Job | Wait-Job
+    Get-Job | Remove-Job
+} else {
+    Write-Output "Flutter Setup Skipped"
+}
