@@ -1,4 +1,4 @@
-Write-Output("v1.0.17")
+Write-Output("v1.0.19")
 try {
     scoop update
 }
@@ -7,10 +7,14 @@ catch {
     irm get.scoop.sh | iex
 }
 
-if (Test-Path -Path 'G:\My Drive\ssh\') {
-    Write-Host "Drive G is mounted."
+$default = 'G:\My Drive\'
+if (!($path = Read-Host "Default path: [$default] (Press Enter), Input new Path")) { $path = $default }
+
+if (Test-Path -Path $path) {
+    Write-Host "$path is valid."
 } else {
-    & 'C:\Program Files\Google\Drive File Stream\97.0.1.0\GoogleDriveFS.exe'
+    if ([System.DirectoryServices.ActiveDirectory.Domain]::GetComputerDomain().Name -eq 'adws.udayton.edu')
+        & 'C:\Program Files\Google\Drive File Stream\97.0.1.0\GoogleDriveFS.exe'
 }
 
 Write-Output("Git Install")
@@ -32,7 +36,7 @@ Get-Job | Wait-Job
 Get-Job | Remove-Job
 
 try {
-    Get-Content -path 'G:\My Drive\ssh\mytoken.txt' | gh auth login --with-token 
+    Get-Content -path (-join($default,'ssh\mytoken.txt')) | gh auth login --with-token 
 } catch {
     gh auth login
 }
@@ -40,14 +44,19 @@ try {
 Get-Job | Wait-Job
 Get-Job | Remove-Job
 scoop install 1password-cli
-Invoke-Expression (Get-Content -path 'G:\My Drive\ssh\op.ps1' -Raw)
+Invoke-Expression (Get-Content -path (-join($default,'ssh\op.ps1')) -Raw)
 
-$userInput = Read-Host "curl ubuntu? y/n"
-if ($userInput -eq "y") {
-    curl http://releases.ubuntu.com/focal/ubuntu-20.04.6-desktop-amd64.iso -UseBasicParsing -b
+if (Test-Path -Path (-join($default,'git\ubuntu-20.04.6-desktop-amd64.iso')) {
+    Write-Output "Ubuntu Iso 20.04 Exist"
 } else {
-    Write-Output "Curl Ubuntu Skipped"
+    $userInput = Read-Host "curl ubuntu? y/n"
+    if ($userInput -eq "y") {
+        curl http://releases.ubuntu.com/focal/ubuntu-20.04.6-desktop-amd64.iso -UseBasicParsing -b
+    } else {
+        Write-Output "Curl Ubuntu Skipped"
+    }
 }
+
 
 $userInput = Read-Host "flutter setup? y/n"
 if ($userInput -eq "y") {
@@ -72,6 +81,13 @@ if ($userInput -eq "y") {
     Start-Job -ScriptBlock { scoop install qemu } -name qemu
     Get-Job | Wait-Job
     Get-Job | Remove-Job
+    cd 'G:\My Drive\git'
+    if (Test-Path -Path (-join($default,'git\Ubuntu20.img'))) {
+        qemu-system-x86_64 -m 1G -smp 2 -boot order=dc -hda .\Ubuntu20.img -cdrom .\ubuntu-20.04.6-desktop-amd64.iso
+    else {
+        qemu-img create -f qcow2 Ubuntu20.img 20G
+        qemu-system-x86_64 -m 1G -smp 2 -boot order=dc -hda .\Ubuntu20.img -cdrom .\ubuntu-20.04.6-desktop-amd64.iso
+    }
 } else {
     Write-Output "VM Setup Skipped"
 }
