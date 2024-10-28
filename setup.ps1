@@ -13,8 +13,7 @@ if (!($path = Read-Host "Default path: [$default] (Press Enter), Input new Path"
 if (Test-Path -Path $path) {
     Write-Host "$path is valid."
 } else {
-    if (([System.DirectoryServices.ActiveDirectory.Domain]::GetComputerDomain().Name -eq 'adws.udayton.edu')
-        & 'C:\Program Files\Google\Drive File Stream\97.0.1.0\GoogleDriveFS.exe') {
+    if ([System.DirectoryServices.ActiveDirectory.Domain]::GetComputerDomain().Name -eq 'adws.udayton.edu' & 'C:\Program Files\Google\Drive File Stream\97.0.1.0\GoogleDriveFS.exe'0)) {
         }
 }
 
