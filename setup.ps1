@@ -49,16 +49,16 @@ Invoke-Expression (Get-Content -path (-join($default,'ssh\op.ps1')) -Raw)
 if (Test-Path -Path (-join($default,'git\ubuntu-20.04.6-desktop-amd64.iso')) {
     Write-Output "Ubuntu Iso 20.04 Exist"
 } else {
-    $userInput = Read-Host "curl ubuntu? y/n"
+    $userInput = Read-Host("curl ubuntu? y/n")
     if ($userInput -eq "y") {
         curl http://releases.ubuntu.com/focal/ubuntu-20.04.6-desktop-amd64.iso -UseBasicParsing -b
     } else {
-        Write-Output "Curl Ubuntu Skipped"
+        Write-Output("Curl Ubuntu Skipped")
     }
 }
 
 
-$userInput = Read-Host "flutter setup? y/n"
+$userInput = Read-Host("flutter setup? y/n")
 if ($userInput -eq "y") {
     Write-Output("Flutter Setup Install")
     Start-Job -ScriptBlock { scoop install vscode } -name code
@@ -71,7 +71,7 @@ if ($userInput -eq "y") {
     Write-Output("Configuration Start")
     Start-Job -ScriptBlock { code install extension Dart-Code.flutter } -name ext_dart
 } else {
-    Write-Output "Flutter Setup Skipped"
+    Write-Output("Flutter Setup Skipped")
 }
 
 #$userInput = Read-Host "VM setup? y/n"
