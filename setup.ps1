@@ -46,7 +46,7 @@ Get-Job | Remove-Job
 scoop install 1password-cli
 Invoke-Expression (Get-Content -path (-join($default,'ssh\op.ps1')) -Raw)
 
-if (Test-Path -Path (-join($default,'git\ubuntu-20.04.6-desktop-amd64.iso')) {
+if (Test-Path -Path (-join($default,'git\ubuntu-20.04.6-desktop-amd64.iso'))) {
     Write-Output "Ubuntu Iso 20.04 Exist"
 } else {
     $userInput = Read-Host("curl ubuntu? y/n")
@@ -74,20 +74,20 @@ if ($userInput -eq "y") {
     Write-Output("Flutter Setup Skipped")
 }
 
-#$userInput = Read-Host "VM setup? y/n"
-#if ($userInput -eq "y") {
-    #Write-Output("qemu  Install")
-    #Write-Output("https://saisuman.org/blog/run-ubuntu-in-windows-using-qemu")
-    #Start-Job -ScriptBlock { scoop install qemu } -name qemu
-    #Get-Job | Wait-Job
-    #Get-Job | Remove-Job
-    #cd 'G:\My Drive\git'
-    #if (Test-Path -Path (-join($default,'git\Ubuntu20.img'))) {
-        #qemu-system-x86_64 -m 1G -smp 2 -boot order=dc -hda .\Ubuntu20.img -cdrom .\ubuntu-20.04.6-desktop-amd64.iso
-    #else {
-      #  qemu-img create -f qcow2 Ubuntu20.img 20G
-     #   qemu-system-x86_64 -m 1G -smp 2 -boot order=dc -hda .\Ubuntu20.img -cdrom .\ubuntu-20.04.6-desktop-amd64.iso
-    #}
-#} else {
-#    Write-Output "VM Setup Skipped"
-#}
+$userInput = Read-Host "VM setup? y/n"
+if ($userInput -eq "y") {
+    Write-Output("qemu  Install")
+    Write-Output("https://saisuman.org/blog/run-ubuntu-in-windows-using-qemu")
+    Start-Job -ScriptBlock { scoop install qemu } -name qemu
+    Get-Job | Wait-Job
+    Get-Job | Remove-Job
+    cd 'G:\My Drive\git'
+    if (Test-Path -Path (-join($default,'git\Ubuntu20.img'))) {
+        qemu-system-x86_64 -m 1G -smp 2 -boot order=dc -hda .\Ubuntu20.img -cdrom .\ubuntu-20.04.6-desktop-amd64.iso
+    } else {
+        qemu-img create -f qcow2 Ubuntu20.img 20G
+        qemu-system-x86_64 -m 1G -smp 2 -boot order=dc -hda .\Ubuntu20.img -cdrom .\ubuntu-20.04.6-desktop-amd64.iso
+    }
+} else {
+    Write-Output "VM Setup Skipped"
+}
