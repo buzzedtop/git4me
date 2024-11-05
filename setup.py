@@ -2,14 +2,8 @@ import os
 import subprocess
 platform = os.name;
 
-def ps(cmd):
-    print(cmd)
-    completed = subprocess.run(["powershell", "-Command", cmd], capture_output=True)
-    return completed
-
 def term(cmd):
-    print(cmd)
-    p = subprocess.Popen('cmd',
+    p = subprocess.Popen(cmd,
                      shell=True,
                      stdout=subprocess.PIPE, 
                      stderr=subprocess.PIPE)
@@ -19,15 +13,16 @@ def term(cmd):
 def display(message):
     match platform:
         case 'nt':
-            ps("Write-Host " + message)
+            term("Write-Host " + message)
         case 'posix':
             term("echo " + message)
 
 if __name__ == "__main__":
-    print("Hello")
+    print("git4.me setup")
     match platform:
         case 'nt':
-            display('Windows')
+            script_path = "git4.me/setup.ps1"
+            subprocess.run(["powershell.exe", "-ExecutionPolicy", "Bypass", "-File", script_path])
         case 'posix':
             display('MacOS')
-            print(term("ls"))
+            print(term("brew --version"))
